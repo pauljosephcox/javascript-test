@@ -2,12 +2,31 @@ exports = typeof window === 'undefined' ? global : window;
 
 exports.stringsAnswers = {
   reduceString: function(str, amount) {
-
+      var rx = new RegExp("(.)(?=\\1{" + amount + "})","g");
+      return str.replace(rx, "");
   },
 
   wordWrap: function(str, cols) {
-    // var regex = '.{1,' +cols+ '}(\s|$)' + (false ? '|.{' +width+ '}|.+$' : '|\S+?(\s|$)');
-    // return str.match( RegExp(regex, 'g') ).join( '\n' );
+
+    var end = '';
+    var i = 0;
+    for(let letter in str){
+
+        if(i >= cols && str[letter] == ' ') {
+            end += "\n";
+            i=0;
+        }
+
+        if(i == 0 && str[letter] == ' '){
+            // nope
+        } else {
+            end += str[letter];
+        }
+        i++;
+    }
+
+    return end;
+
   },
 
   reverseString: function(str) {
